@@ -1,4 +1,6 @@
-#include "Game.h"
+#include "TextureManager.h"
+
+SDL_Texture* bgTex;
 
 Game::Game() {}
 
@@ -18,9 +20,9 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
             SDL_SetRenderDrawColor(renderer,255, 0, 0, 255);
         }
         isRunning = true;
-    } else {
-        isRunning = false;
     }
+
+    bgTex = TextureManager::LoadTexture("assets/bg.png", renderer);
 }
 
 void Game::handleEvents() {
@@ -40,6 +42,7 @@ void Game::update() {}
 void Game::render() {
     SDL_RenderClear(renderer);
 
+    SDL_RenderCopy(renderer, bgTex, NULL, NULL);
     SDL_RenderPresent(renderer);
 }
 
