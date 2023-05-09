@@ -13,8 +13,9 @@ public:
     void Update();
     void Render();
     void Clean();
-    void handleEvent(SDL_Event& e);
-
+    void HandleEvent(SDL_Event& e);
+    bool CheckCollision(SDL_Rect a, SDL_Rect b);
+    void HandleWallCollisions();
 private:
     int xpos, ypos;
     int velocityX, velocityY;
