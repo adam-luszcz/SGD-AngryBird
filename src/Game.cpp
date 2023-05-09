@@ -1,6 +1,9 @@
 #include "TextureManager.h"
+#include "Player.h"
+#include "Game.h"
 
 SDL_Texture* bgTex;
+Player* player;
 
 Game::Game() {}
 
@@ -22,7 +25,8 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
         isRunning = true;
     }
 
-    bgTex = TextureManager::LoadTexture("assets/bg.png", renderer);
+    bgTex = TextureManager::LoadTexture("assets/bg_new.png", renderer);
+    player = new Player("assets/player/bird.png", renderer, 400 - 38, 300 - 28);
 }
 
 void Game::handleEvents() {
@@ -37,16 +41,20 @@ void Game::handleEvents() {
     }
 }
 
-void Game::update() {}
+void Game::update() {
+    player->Update();
+}
 
 void Game::render() {
     SDL_RenderClear(renderer);
-
     SDL_RenderCopy(renderer, bgTex, NULL, NULL);
+    player->Render();
     SDL_RenderPresent(renderer);
 }
 
 void Game::clean() {
+    SDL_DestroyTexture(bgTex);
+    player->Clean();
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();

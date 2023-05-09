@@ -1,6 +1,6 @@
 #ifndef ANGRYBIRD_GAME_H
 #define ANGRYBIRD_GAME_H
-#endif //ANGRYBIRD_GAME_H
+
 
 #define SDL_MAIN_HANDLED
 #include "SDL.h"
@@ -28,3 +28,5 @@ private:
     SDL_Window *window;
     SDL_Renderer *renderer;
 };
+
+#endif //ANGRYBIRD_GAME_H
