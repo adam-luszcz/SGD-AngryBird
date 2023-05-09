@@ -13,9 +13,12 @@ public:
     void Update();
     void Render();
     void Clean();
+    void handleEvent(SDL_Event& e);
 
 private:
     int xpos, ypos;
+    int velocityX, velocityY;
+    double angle;
 
     SDL_Texture* playerTex;
     SDL_Rect srcRect, destRect;

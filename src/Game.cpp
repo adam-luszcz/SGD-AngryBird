@@ -32,6 +32,7 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
 void Game::handleEvents() {
     SDL_Event event;
     SDL_PollEvent(&event);
+    player->handleEvent(event);
     switch (event.type) {
         case SDL_QUIT:
             isRunning = false;
