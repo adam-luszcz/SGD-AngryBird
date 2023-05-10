@@ -4,6 +4,7 @@
 #include <iostream>
 
 const int SHOTGUN_RECOIL = 5;
+const int MAX_SPEED = 20;
 
 std::vector<SDL_Rect> walls;
 
@@ -33,7 +34,12 @@ Player::~Player() {
 
 void Player::Update() {
     HandleWallCollisions();
-
+    if (velocityX > MAX_SPEED) {
+        velocityX = MAX_SPEED;
+    }
+    if (velocityY > MAX_SPEED) {
+        velocityY = MAX_SPEED;
+    }
     xpos += velocityX;
     ypos += velocityY;
 
@@ -80,18 +86,36 @@ void Player::HandleWallCollisions() {
         velocityX = -velocityX;
         velocityY = -velocityY;
     }
-    // left/right wall
-    else if (CheckCollision(destRect, walls[0]) || CheckCollision(destRect, walls[2])) {
+    // left wall
+    else if (CheckCollision(destRect, walls[0])) {
         if (velocityY > destRect.y) {
             velocityY = -velocityY;
         }
+        xpos += 4;
         velocityX = -velocityX;
     }
-    // top/bottom wall
-    else if (CheckCollision(destRect, walls[1]) || CheckCollision(destRect, walls[3])) {
+    // right wall
+    else if (CheckCollision(destRect, walls[2])) {
+        if (velocityY > destRect.y) {
+            velocityY = -velocityY;
+        }
+        xpos -= 4;
+        velocityX = -velocityX;
+    }
+    // top wall
+    else if (CheckCollision(destRect, walls[1])) {
         if (velocityX > destRect.x) {
             velocityX = -velocityX;
         }
+        ypos += 4;
+        velocityY = -velocityY;
+    }
+    // bottom wall
+    else if (CheckCollision(destRect, walls[3])) {
+        if (velocityX > destRect.x) {
+            velocityX = -velocityX;
+        }
+        ypos -= 4;
         velocityY = -velocityY;
     }
 }
