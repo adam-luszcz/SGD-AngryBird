@@ -12,14 +12,14 @@ public:
     Game();
     ~Game();
 
-    void init(const char* title, int x, int y, int width, int height, bool fullscreen);
+    void Init(const char* title, int x, int y, int width, int height, bool fullscreen);
 
-    void handleEvents();
-    void update();
-    void render();
-    void clean();
+    void HandleEvents();
+    void Update();
+    void Render();
+    void Clean();
 
-    bool running() {
+    bool Running() {
         return isRunning;
     };
 

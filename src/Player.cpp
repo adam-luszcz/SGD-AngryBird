@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "TextureManager.h"
 #include "vector"
+#include <iostream>
 
 const int SHOTGUN_RECOIL = 5;
 
@@ -25,7 +26,10 @@ Player::Player(const char* filename, SDL_Renderer *ren, int x, int y) {
     velocityX = velocityY = 0;
 }
 
-Player::~Player() {}
+Player::~Player() {
+    Clean();
+    std::cout << "Player deleted!" << std::endl;
+}
 
 void Player::Update() {
     HandleWallCollisions();

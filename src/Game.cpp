@@ -1,15 +1,19 @@
 #include "TextureManager.h"
 #include "Player.h"
 #include "Game.h"
+#include <iostream>
 
 SDL_Texture* bgTex;
 Player* player;
 
 Game::Game() {}
 
-Game::~Game() {}
+Game::~Game() {
+    Clean();
+    std::cout << "Game deleted!" << std::endl;
+}
 
-void Game::init(const char* title, int x, int y, int width, int height, bool fullscreen) {
+void Game::Init(const char* title, int x, int y, int width, int height, bool fullscreen) {
     int flags = 0;
 
     if (fullscreen) {
@@ -29,7 +33,7 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
     player = new Player("assets/player/bird.png", renderer, 400 - 38, 300 - 28);
 }
 
-void Game::handleEvents() {
+void Game::HandleEvents() {
     SDL_Event event;
     SDL_PollEvent(&event);
     player->HandleEvent(event);
@@ -42,20 +46,20 @@ void Game::handleEvents() {
     }
 }
 
-void Game::update() {
+void Game::Update() {
     player->Update();
 }
 
-void Game::render() {
+void Game::Render() {
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, bgTex, NULL, NULL);
     player->Render();
     SDL_RenderPresent(renderer);
 }
 
-void Game::clean() {
+void Game::Clean() {
     SDL_DestroyTexture(bgTex);
-    player->Clean();
+    delete player;
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
