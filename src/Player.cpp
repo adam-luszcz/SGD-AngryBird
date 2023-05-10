@@ -10,10 +10,10 @@ std::vector<SDL_Rect> walls;
 Player::Player(const char* filename, SDL_Renderer *ren, int x, int y) {
     renderer = ren;
     playerTex = TextureManager::LoadTexture(filename, renderer);
-    walls.push_back({0, 0, 30, 600});
-    walls.push_back({0, 0, 800, 30});
-    walls.push_back({770, 0, 30, 600});
-    walls.push_back({0, 570, 800, 30});
+    walls.push_back({0, 0, 30, 600}); // left
+    walls.push_back({0, 0, 800, 30}); // top
+    walls.push_back({770, 0, 30, 600}); // right
+    walls.push_back({0, 570, 800, 30}); // bottom
 
     xpos = x;
     ypos = y;
@@ -28,6 +28,8 @@ Player::Player(const char* filename, SDL_Renderer *ren, int x, int y) {
 Player::~Player() {}
 
 void Player::Update() {
+    HandleWallCollisions();
+
     xpos += velocityX;
     ypos += velocityY;
 
@@ -66,7 +68,28 @@ void Player::HandleEvent(SDL_Event& e) {
 }
 
 void Player::HandleWallCollisions() {
-
+    // corner handling
+    if ((CheckCollision(destRect, walls[0]) && CheckCollision(destRect, walls[1])) ||
+    (CheckCollision(destRect, walls[1]) && CheckCollision(destRect, walls[2])) ||
+    (CheckCollision(destRect, walls[2]) && CheckCollision(destRect, walls[3])) ||
+    (CheckCollision(destRect, walls[3]) && CheckCollision(destRect, walls[0]))) {
+        velocityX = -velocityX;
+        velocityY = -velocityY;
+    }
+    // left/right wall
+    else if (CheckCollision(destRect, walls[0]) || CheckCollision(destRect, walls[2])) {
+        if (velocityY > destRect.y) {
+            velocityY = -velocityY;
+        }
+        velocityX = -velocityX;
+    }
+    // top/bottom wall
+    else if (CheckCollision(destRect, walls[1]) || CheckCollision(destRect, walls[3])) {
+        if (velocityX > destRect.x) {
+            velocityX = -velocityX;
+        }
+        velocityY = -velocityY;
+    }
 }
 
 bool Player::CheckCollision(SDL_Rect a, SDL_Rect b) {
