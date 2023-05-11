@@ -6,6 +6,8 @@
 #include <ctime>
 #include <cstdlib>
 #include <vector>
+#include "SDL_ttf.h"
+#include "DynamicText.h"
 
 SDL_Texture* bgTex;
 Player* player;
@@ -26,7 +28,6 @@ void Game::Init(const char* title, int x, int y, int width, int height, bool ful
     if (fullscreen) {
         flags = SDL_WINDOW_FULLSCREEN;
     }
-
     if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
         window = SDL_CreateWindow(title, x, y, w, h, flags);
         renderer = SDL_CreateRenderer(window, -1, 0);
@@ -36,6 +37,7 @@ void Game::Init(const char* title, int x, int y, int width, int height, bool ful
         }
         isRunning = true;
     }
+
 
     bgTex = TextureManager::LoadTexture("assets/bg_new.png", renderer);
     player = new Player("assets/player/bird.png", renderer, 400 - 38, 300 - 28);
@@ -70,6 +72,8 @@ void Game::Update() {
 void Game::Render(bool renderZone) {
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, bgTex, NULL, NULL);
+    DynamicText scoreText("assets/fonts/STENCIL.TTF", 32);
+    scoreText.DrawText(renderer, "Score: " + std::to_string(score), w - 165, 25, w/6 ,h/6);
     player->Render();
     for (auto enemy : enemies) {
         enemy->Render();
@@ -140,5 +144,5 @@ void Game::HandleEnemyDestruction() {
             enemies.erase(enemies.cbegin() + i);
         }
     }
-    std::cout << "enemies on screen: " << enemies.size() << std::endl;
+    //std::cout << "enemies on screen: " << enemies.size() << std::endl;
 }
