@@ -6,7 +6,6 @@
 #include <ctime>
 #include <cstdlib>
 #include <vector>
-#include "SDL_ttf.h"
 #include "DynamicText.h"
 
 SDL_Texture* bgTex;
@@ -53,6 +52,12 @@ void Game::HandleEvents() {
         case SDL_QUIT:
             isRunning = false;
             break;
+        case SDL_KEYDOWN:
+            if (event.key.keysym.sym == SDLK_r) {
+                gameOver = false;
+                Restart();
+            }
+            break;
         default:
             break;
     }
@@ -71,15 +76,23 @@ void Game::Update() {
 
 void Game::Render(bool renderZone) {
     SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, bgTex, NULL, NULL);
-    DynamicText scoreText("assets/fonts/STENCIL.TTF", 32);
-    scoreText.DrawText(renderer, "Score: " + std::to_string(score), w - 165, 25, w/6 ,h/6);
-    player->Render();
-    for (auto enemy : enemies) {
-        enemy->Render();
+    if (!gameOver) {
+        SDL_RenderCopy(renderer, bgTex, NULL, NULL);
+        DynamicText scoreText("assets/fonts/STENCIL.TTF", 32);
+        scoreText.DrawText(renderer, "Score: " + std::to_string(score), w - 165, 25, w / 6, h / 6);
+        player->Render();
+        for (auto enemy: enemies) {
+            enemy->Render();
+        }
+        RenderScoreZone();
+    } else {
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        DynamicText gameOverText("assets/fonts/STENCIL.TTF", 32);
+        DynamicText scoreText("assets/fonts/STENCIL.TTF", 32);
+        gameOverText.DrawText(renderer, "Game Over!", 0, 25, w, h / 2);
+        scoreText.DrawText(renderer, "Final score: " + std::to_string(score), 30 + w / 5, h / 2, w / 2, h / 4);
+        enemies.clear();
     }
-    RenderScoreZone();
-
     SDL_RenderPresent(renderer);
 }
 
@@ -119,7 +132,7 @@ void Game::RenderScoreZone() {
 }
 
 void Game::AddScore() {
-    if (player->CheckCollision(player->GetDestRect(), scoreZone)) {
+    if (player->CheckCollision(player->GetDestRect(), scoreZone) && !gameOver) {
         score += 1;
         //std::cout << score << std::endl;
     }
@@ -127,6 +140,7 @@ void Game::AddScore() {
 
 void Game::HandleEnemyCollision(Enemy* e) {
     if (player->CheckCollision(player->GetDestRect(), e->GetDestRect())) {
+        gameOver = true;
         std::cout << "got hit!" << std::endl;
     }
 }
@@ -145,4 +159,10 @@ void Game::HandleEnemyDestruction() {
         }
     }
     //std::cout << "enemies on screen: " << enemies.size() << std::endl;
+}
+
+void Game::Restart() {
+    enemies.clear();
+    player = new Player("assets/player/bird.png", renderer, 400 - 38, 300 - 28);
+    score = 0;
 }

@@ -25,6 +25,7 @@ public:
     void HandleEnemyCollision(Enemy* e);
     void HandleEnemySpawn();
     void HandleEnemyDestruction();
+    void Restart();
     /*static Uint32 RenderScoreHandler(Uint32 interval, void *p) {
         Game *self = reinterpret_cast<Game *>(p);
         self->Render(true);
@@ -38,6 +39,7 @@ public:
 
 private:
     int score = 0;
+    bool gameOver = false;
     bool isRunning;
     int zoneIdx;
     SDL_Window *window;
