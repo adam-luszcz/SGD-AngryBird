@@ -11,7 +11,6 @@ Enemy::Enemy(const char *filename, SDL_Renderer *ren, int x, int y) {
     ypos = y;
     destRect.h = destRect.w = srcRect.h = srcRect.w = 32;
     srcRect.x = srcRect.y = 0;
-    velocityX = velocityY = 0;
 }
 
 Enemy::~Enemy() {
@@ -20,7 +19,7 @@ Enemy::~Enemy() {
 }
 
 void Enemy::Update() {
-    xpos -= SPEED;
+    xpos -= velocityX;
 
     destRect.x = xpos;
     destRect.y = ypos;
@@ -32,4 +31,8 @@ void Enemy::Render() {
 
 void Enemy::Clean() {
     SDL_DestroyTexture(enemyTex);
+}
+
+SDL_Rect Enemy::GetDestRect() {
+    return destRect;
 }

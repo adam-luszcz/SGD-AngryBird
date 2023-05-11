@@ -1,5 +1,6 @@
 #include "TextureManager.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "Game.h"
 #include <iostream>
 #include <ctime>
@@ -7,6 +8,7 @@
 
 SDL_Texture* bgTex;
 Player* player;
+Enemy* enemy;
 
 Game::Game() {}
 
@@ -36,6 +38,7 @@ void Game::Init(const char* title, int x, int y, int width, int height, bool ful
 
     bgTex = TextureManager::LoadTexture("assets/bg_new.png", renderer);
     player = new Player("assets/player/bird.png", renderer, 400 - 38, 300 - 28);
+    enemy = new Enemy("assets/enemy/enemy_0.png", renderer, 800, h/2);
     scoreZone.w = w/2;
     scoreZone.h = h/2;
 }
@@ -55,13 +58,16 @@ void Game::HandleEvents() {
 
 void Game::Update() {
     player->Update();
+    enemy->Update();
     AddScore();
+    HandleEnemyCollision(enemy);
 }
 
 void Game::Render(bool renderZone) {
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, bgTex, NULL, NULL);
     player->Render();
+    enemy->Render();
     RenderScoreZone();
 
     SDL_RenderPresent(renderer);
@@ -106,5 +112,11 @@ void Game::AddScore() {
     if (player->CheckCollision(player->GetDestRect(), scoreZone)) {
         score += 1;
         std::cout << score << std::endl;
+    }
+}
+
+void Game::HandleEnemyCollision(Enemy* e) {
+    if (player->CheckCollision(player->GetDestRect(), e->GetDestRect())) {
+        std::cout << "got hit!" << std::endl;
     }
 }

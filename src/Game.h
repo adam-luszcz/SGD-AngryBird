@@ -5,6 +5,7 @@
 #define SDL_MAIN_HANDLED
 #include "SDL.h"
 #include "SDL_image.h"
+#include "Enemy.h"
 
 class Game {
 
@@ -20,6 +21,7 @@ public:
     void Clean();
     void RenderScoreZone();
     void AddScore();
+    void HandleEnemyCollision(Enemy* e);
 
     /*static Uint32 RenderScoreHandler(Uint32 interval, void *p) {
         Game *self = reinterpret_cast<Game *>(p);

@@ -1,7 +1,7 @@
 #ifndef ANGRYBIRD_ENEMY_H
 #define ANGRYBIRD_ENEMY_H
 
-#include "Game.h"
+#include "SDL.h"
 
 class Enemy {
 public:
@@ -11,11 +11,12 @@ public:
     void Update();
     void Render();
     void Clean();
+    SDL_Rect GetDestRect();
 
 private:
     int xpos, ypos;
-    int velocityX, velocityY;
-    const int SPEED = 10;
+    int velocityX = 5;
+    int velocityY;
 
     SDL_Texture* enemyTex;
     SDL_Rect srcRect, destRect;
