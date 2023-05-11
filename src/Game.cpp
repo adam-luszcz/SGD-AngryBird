@@ -2,6 +2,8 @@
 #include "Player.h"
 #include "Game.h"
 #include <iostream>
+#include <ctime>
+#include <cstdlib>
 
 SDL_Texture* bgTex;
 Player* player;
@@ -15,14 +17,17 @@ Game::~Game() {
 
 void Game::Init(const char* title, int x, int y, int width, int height, bool fullscreen) {
     int flags = 0;
-
+    w = width;
+    h = height;
+    srand(std::time(nullptr));
     if (fullscreen) {
         flags = SDL_WINDOW_FULLSCREEN;
     }
 
     if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
-        window = SDL_CreateWindow(title, x, y, width, height, flags);
+        window = SDL_CreateWindow(title, x, y, w, h, flags);
         renderer = SDL_CreateRenderer(window, -1, 0);
+        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
         if (renderer) {
             SDL_SetRenderDrawColor(renderer,255, 0, 0, 255);
         }
@@ -31,6 +36,8 @@ void Game::Init(const char* title, int x, int y, int width, int height, bool ful
 
     bgTex = TextureManager::LoadTexture("assets/bg_new.png", renderer);
     player = new Player("assets/player/bird.png", renderer, 400 - 38, 300 - 28);
+    scoreZone.w = w/2;
+    scoreZone.h = h/2;
 }
 
 void Game::HandleEvents() {
@@ -48,12 +55,15 @@ void Game::HandleEvents() {
 
 void Game::Update() {
     player->Update();
+    AddScore();
 }
 
-void Game::Render() {
+void Game::Render(bool renderZone) {
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, bgTex, NULL, NULL);
     player->Render();
+    RenderScoreZone();
+
     SDL_RenderPresent(renderer);
 }
 
@@ -63,4 +73,38 @@ void Game::Clean() {
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
+}
+
+void Game::RenderScoreZone() {
+    if (SDL_GetTicks() % 300 == 0) {
+        zoneIdx = rand() % 4;
+        switch (zoneIdx) {
+            case 0:
+                scoreZone.x = scoreZone.y = 0;
+                break;
+            case 1:
+                scoreZone.x = w / 2;
+                scoreZone.y = 0;
+                break;
+            case 2:
+                scoreZone.x = 0;
+                scoreZone.y = h / 2;
+                break;
+            case 3:
+                scoreZone.x = w / 2;
+                scoreZone.y = h / 2;
+                break;
+        }
+        //std::cout << zoneIdx << std::endl;
+    }
+    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 100);
+    SDL_RenderFillRect(renderer, &scoreZone);
+    SDL_RenderDrawRect(renderer, &scoreZone);
+}
+
+void Game::AddScore() {
+    if (player->CheckCollision(player->GetDestRect(), scoreZone)) {
+        score += 1;
+        std::cout << score << std::endl;
+    }
 }

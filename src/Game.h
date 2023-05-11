@@ -16,17 +16,29 @@ public:
 
     void HandleEvents();
     void Update();
-    void Render();
+    void Render(bool renderZone);
     void Clean();
+    void RenderScoreZone();
+    void AddScore();
+
+    /*static Uint32 RenderScoreHandler(Uint32 interval, void *p) {
+        Game *self = reinterpret_cast<Game *>(p);
+        self->Render(true);
+        return interval;
+    }*/
 
     bool Running() {
         return isRunning;
     };
+    int w, h;
 
 private:
+    int score = 0;
     bool isRunning;
+    int zoneIdx;
     SDL_Window *window;
     SDL_Renderer *renderer;
+    SDL_Rect scoreZone;
 };
 
 #endif //ANGRYBIRD_GAME_H

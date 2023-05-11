@@ -16,6 +16,7 @@ public:
     void HandleEvent(SDL_Event& e);
     bool CheckCollision(SDL_Rect a, SDL_Rect b);
     void HandleWallCollisions();
+    SDL_Rect GetDestRect();
 private:
     int xpos, ypos;
     int velocityX, velocityY;

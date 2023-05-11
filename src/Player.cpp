@@ -137,3 +137,7 @@ bool Player::CheckCollision(SDL_Rect a, SDL_Rect b) {
 
     return true;
 }
+
+SDL_Rect Player::GetDestRect() {
+    return destRect;
+}
