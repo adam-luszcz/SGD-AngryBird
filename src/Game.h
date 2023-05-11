@@ -6,6 +6,7 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include "Enemy.h"
+#include <vector>
 
 class Game {
 
@@ -22,7 +23,8 @@ public:
     void RenderScoreZone();
     void AddScore();
     void HandleEnemyCollision(Enemy* e);
-
+    void HandleEnemySpawn();
+    void HandleEnemyDestruction();
     /*static Uint32 RenderScoreHandler(Uint32 interval, void *p) {
         Game *self = reinterpret_cast<Game *>(p);
         self->Render(true);
