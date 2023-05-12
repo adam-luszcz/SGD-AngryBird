@@ -11,6 +11,8 @@
 SDL_Texture* bgTex;
 Player* player;
 std::vector<Enemy*> enemies;
+DynamicText gameOverText("assets/fonts/STENCIL.TTF", 32);
+DynamicText scoreText("assets/fonts/STENCIL.TTF", 32);
 
 Game::Game() {}
 
@@ -36,7 +38,6 @@ void Game::Init(const char* title, int x, int y, int width, int height, bool ful
         }
         isRunning = true;
     }
-
 
     bgTex = TextureManager::LoadTexture("assets/bg_new.png", renderer);
     player = new Player("assets/player/bird.png", renderer, 400 - 38, 300 - 28);
@@ -78,7 +79,6 @@ void Game::Render(bool renderZone) {
     SDL_RenderClear(renderer);
     if (!gameOver) {
         SDL_RenderCopy(renderer, bgTex, NULL, NULL);
-        DynamicText scoreText("assets/fonts/STENCIL.TTF", 32);
         scoreText.DrawText(renderer, "Score: " + std::to_string(score), w - 165, 25, w / 6, h / 6);
         player->Render();
         for (auto enemy: enemies) {
@@ -87,8 +87,6 @@ void Game::Render(bool renderZone) {
         RenderScoreZone();
     } else {
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-        DynamicText gameOverText("assets/fonts/STENCIL.TTF", 32);
-        DynamicText scoreText("assets/fonts/STENCIL.TTF", 32);
         gameOverText.DrawText(renderer, "Game Over!", 0, 25, w, h / 2);
         scoreText.DrawText(renderer, "Final score: " + std::to_string(score), 30 + w / 5, h / 2, w / 2, h / 4);
         enemies.clear();

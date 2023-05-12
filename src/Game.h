@@ -6,6 +6,7 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include "Enemy.h"
+#include "DynamicText.h"
 #include <vector>
 
 class Game {
