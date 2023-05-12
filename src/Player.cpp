@@ -2,12 +2,13 @@
 #include "TextureManager.h"
 #include "vector"
 #include <iostream>
+#include "SDL_mixer.h"
 
 const int SHOTGUN_RECOIL = 10;
 const int MAX_SPEED = 20;
 const double GRAVITY = 0.5;
 std::vector<SDL_Rect> walls;
-
+Mix_Chunk *shootingSound = nullptr;
 
 
 Player::Player(const char* filename, SDL_Renderer *ren, int x, int y) {
@@ -17,7 +18,12 @@ Player::Player(const char* filename, SDL_Renderer *ren, int x, int y) {
     walls.push_back({0, 0, 800, 30}); // top
     walls.push_back({770, 0, 30, 600}); // right
     walls.push_back({0, 570, 800, 30}); // bottom
-
+    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+        std::cout << "SDL_Mixer couldnt init. Err: " << Mix_GetError() << std::endl;
+    } else {
+        shootingSound = Mix_LoadWAV("assets/sounds/shoot.wav");
+        Mix_Volume(-1, (MIX_MAX_VOLUME * 50) / 100);
+    }
     xpos = x;
     ypos = y;
 
@@ -58,6 +64,7 @@ void Player::Render() {
 
 void Player::Clean() {
     SDL_DestroyTexture(playerTex);
+    Mix_FreeChunk(shootingSound);
 }
 
 void Player::HandleEvent(SDL_Event& e) {
@@ -71,6 +78,7 @@ void Player::HandleEvent(SDL_Event& e) {
 
         velocityX -= SHOTGUN_RECOIL * cos(angleRadians);
         velocityY -= SHOTGUN_RECOIL * sin(angleRadians);
+        Mix_PlayChannel(-1, shootingSound, 0);
     } else if (e.type == SDL_MOUSEMOTION) {
         int mouseX, mouseY;
         SDL_GetMouseState(&mouseX, &mouseY);
