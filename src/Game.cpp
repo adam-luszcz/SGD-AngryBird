@@ -75,7 +75,7 @@ void Game::Update() {
     AddScore();
 }
 
-void Game::Render(bool renderZone) {
+void Game::Render() {
     SDL_RenderClear(renderer);
     if (!gameOver) {
         SDL_RenderCopy(renderer, bgTex, NULL, NULL);

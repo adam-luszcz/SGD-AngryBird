@@ -19,7 +19,7 @@ public:
 
     void HandleEvents();
     void Update();
-    void Render(bool renderZone);
+    void Render();
     void Clean();
     void RenderScoreZone();
     void AddScore();
