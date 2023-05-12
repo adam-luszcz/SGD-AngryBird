@@ -3,10 +3,11 @@
 #include "vector"
 #include <iostream>
 
-const int SHOTGUN_RECOIL = 5;
+const int SHOTGUN_RECOIL = 10;
 const int MAX_SPEED = 20;
-
+const double GRAVITY = 0.5;
 std::vector<SDL_Rect> walls;
+
 
 
 Player::Player(const char* filename, SDL_Renderer *ren, int x, int y) {
@@ -34,6 +35,9 @@ Player::~Player() {
 
 void Player::Update() {
     HandleWallCollisions();
+
+    velocityY += GRAVITY;
+
     if (velocityX > MAX_SPEED) {
         velocityX = MAX_SPEED;
     }

@@ -18,8 +18,8 @@ public:
     void HandleWallCollisions();
     SDL_Rect GetDestRect();
 private:
-    int xpos, ypos;
-    int velocityX, velocityY;
+    double xpos, ypos;
+    double velocityX, velocityY;
     double angle;
 
     SDL_Texture* playerTex;
