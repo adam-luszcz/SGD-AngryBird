@@ -10,6 +10,7 @@ const int MAX_SPEED = 20;
 const double GRAVITY = 0.5;
 std::vector<SDL_Rect> walls;
 Mix_Chunk *shootingSound = nullptr;
+Mix_Music* music = nullptr;
 
 
 Player::Player(const char* filename, SDL_Renderer *ren, int x, int y) {
@@ -23,7 +24,11 @@ Player::Player(const char* filename, SDL_Renderer *ren, int x, int y) {
         std::cout << "SDL_Mixer couldnt init. Err: " << Mix_GetError() << std::endl;
     } else {
         shootingSound = Mix_LoadWAV("assets/sounds/shoot.wav");
-        Mix_Volume(-1, (MIX_MAX_VOLUME * 50) / 100);
+        music = Mix_LoadMUS("assets/sounds/music.mp3");
+        Mix_Volume(-1, (MIX_MAX_VOLUME * 20) / 100);
+        if(Mix_PlayingMusic() == 0) {
+            Mix_PlayMusic(music, -1);
+        }
     }
     xpos = x;
     ypos = y;
