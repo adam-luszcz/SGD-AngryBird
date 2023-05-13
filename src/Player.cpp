@@ -3,6 +3,7 @@
 #include "vector"
 #include <iostream>
 #include "SDL_mixer.h"
+#include <cmath>
 
 const int SHOTGUN_RECOIL = 10;
 const int MAX_SPEED = 20;
