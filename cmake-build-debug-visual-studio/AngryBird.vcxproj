@@ -320,6 +320,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="C:\Users\s22994\Desktop\SGD-AngryBird\src\Enemy.cpp" />
     <ClInclude Include="C:\Users\s22994\Desktop\SGD-AngryBird\src\DynamicText.h" />
     <ClCompile Include="C:\Users\s22994\Desktop\SGD-AngryBird\src\DynamicText.cpp" />
+    <ClInclude Include="C:\Users\s22994\Desktop\SGD-AngryBird\src\HighScore.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="C:\Users\s22994\Desktop\SGD-AngryBird\cmake-build-debug-visual-studio\ZERO_CHECK.vcxproj">

@@ -36,6 +36,9 @@
     <ClInclude Include="C:\Users\s22994\Desktop\SGD-AngryBird\src\DynamicText.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="C:\Users\s22994\Desktop\SGD-AngryBird\src\HighScore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\s22994\Desktop\SGD-AngryBird\CMakeLists.txt" />
