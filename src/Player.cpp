@@ -25,7 +25,7 @@ Player::Player(const char* filename, SDL_Renderer *ren, int x, int y) {
     } else {
         shootingSound = Mix_LoadWAV("assets/sounds/shoot.wav");
         music = Mix_LoadMUS("assets/sounds/music.mp3");
-        Mix_Volume(-1, (MIX_MAX_VOLUME * 20) / 100);
+        Mix_VolumeMusic((MIX_MAX_VOLUME * 50) / 100);
         if(Mix_PlayingMusic() == 0) {
             Mix_PlayMusic(music, -1);
         }
@@ -71,6 +71,7 @@ void Player::Render() {
 void Player::Clean() {
     SDL_DestroyTexture(playerTex);
     Mix_FreeChunk(shootingSound);
+    Mix_FreeMusic(music);
 }
 
 void Player::HandleEvent(SDL_Event& e) {

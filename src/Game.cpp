@@ -161,6 +161,7 @@ void Game::HandleEnemyDestruction() {
 
 void Game::Restart() {
     enemies.clear();
+    delete player;
     player = new Player("assets/player/bird.png", renderer, 400 - 38, 300 - 28);
     score = 0;
 }

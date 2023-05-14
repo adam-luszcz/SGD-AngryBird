@@ -1,0 +1,3 @@
+C:/Users/s22994/Desktop/SGD-AngryBird/cmake-build-debug-visual-studio/CMakeFiles/AngryBird.dir
+C:/Users/s22994/Desktop/SGD-AngryBird/cmake-build-debug-visual-studio/CMakeFiles/ALL_BUILD.dir
+C:/Users/s22994/Desktop/SGD-AngryBird/cmake-build-debug-visual-studio/CMakeFiles/ZERO_CHECK.dir

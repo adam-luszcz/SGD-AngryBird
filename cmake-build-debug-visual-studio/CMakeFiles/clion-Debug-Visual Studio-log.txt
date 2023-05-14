@@ -1,0 +1,5 @@
+"C:\Program Files\JetBrains\CLion 2022.3.2\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -S C:\Users\s22994\Desktop\SGD-AngryBird -B C:\Users\s22994\Desktop\SGD-AngryBird\cmake-build-debug-visual-studio
+-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.
+-- Configuring done
+-- Generating done
+-- Build files have been written to: C:/Users/s22994/Desktop/SGD-AngryBird/cmake-build-debug-visual-studio
