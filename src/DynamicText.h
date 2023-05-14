@@ -1,3 +1,5 @@
+// Source: https://github.com/MikeShah/SDL2_Tutorials/tree/main/29_FontClass
+
 #ifndef ANGRYBIRD_DYNAMICTEXT_H
 #define ANGRYBIRD_DYNAMICTEXT_H
 

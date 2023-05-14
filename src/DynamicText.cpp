@@ -1,3 +1,5 @@
+// Source: https://github.com/MikeShah/SDL2_Tutorials/tree/main/29_FontClass
+
 #include "DynamicText.h"
 #include <iostream>
 
